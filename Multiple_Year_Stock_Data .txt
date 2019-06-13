@@ -1,3 +1,0 @@
-name = imput ("what is your name")
-age = int(input("input("how old are you?")))
-tueorfalse=bool(input)
