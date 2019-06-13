@@ -1,0 +1,64 @@
+Sub stock2()
+
+Dim ticker As String, vol As Double
+Dim table_output As Integer
+Dim open_start As Double
+Dim open_index As Double
+Dim close_end As Double
+Dim yearly As Double
+Dim percent As Double
+Dim ws As Worksheet
+Dim open_val As Double
+
+
+For Each ws In Worksheets
+
+
+
+vol = 0
+table_output = 2
+
+open_index = 2
+
+
+
+totalrow = ws.Cells(Rows.Count, 1).End(xlUp).Row
+For i = 2 To totalrow
+
+If ws.Cells(i, 1).Value <> ws.Cells(i + 1, 1).Value Then
+
+ticker = ws.Cells(i, 1).Value
+vol = vol + ws.Cells(i, 7).Value
+
+open_val = ws.Cells(open_index, 3).Value
+
+yearly = ws.Cells(i, 6).Value - open_val
+
+If yearly = 0 Or open_val = 0 Then
+percentage = 0
+Else
+percentage = (yearly / open_val) * 100
+
+End If
+
+percentage = Str(Round(percentage, 2))
+
+ws.Range("I" & table_output).Value = ticker
+ws.Range("J" & table_output).Value = vol
+
+ws.Range("K" & table_output).Value = yearly
+ws.Range("L" & table_output).Value = percentage & "%"
+
+
+table_output = table_output + 1
+
+vol = 0
+open_index = i + 1
+Else
+vol = vol + ws.Cells(i, 7).Value
+End If
+Next i
+Next ws
+
+
+End Sub
